@@ -27,7 +27,7 @@ I will fix the UI and make sure join the room properly. Sometimes the user has l
 2. To ensure a smooth user experience as 1000’s of users, I have to pay attention to Load Testing and Scalability Planning, Caching, CDN, Database Optimization, Error Handling and Monitoring, Optimise Frontend
 3. To ensure application security, I have to consider data validation, authorization and authentication, message encryption, data privacy, input validation and sanitization, API security, Firewall, Penetration Testing. 
 
-
+I haven't completed the UI yet and validation when user join the rooom. I did my best because I was on short time. 
 
 
 
