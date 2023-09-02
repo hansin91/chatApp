@@ -1,8 +1,7 @@
 import app from './app'
 import { Server } from 'socket.io'
 import jwt from 'jsonwebtoken'
-import User from './models/User'
-import Message from './models/Message'
+import { addUser, getUsersInRoom, getUser, removeUser } from './helper'
 
 const PORT = process.env.PORT
 const server = app.listen(PORT, () => {
@@ -12,7 +11,7 @@ const server = app.listen(PORT, () => {
 const io = new Server(server, {
   allowEIO3: true,
   cors: {
-    origin: true,
+    origin: ["http://localhost:3000"],
     methods: ['GET', 'POST'],
     credentials: true
   }
@@ -28,40 +27,47 @@ io.use(async (socket: any, next) => {
       socket.userId = data.id
     }
     next();
-  } catch (err) {}
+  } catch (err) {
+    console.log(err)
+  }
 });
 
-io.on("connection", (socket: any) => {
-  console.log("Connected: " + socket.userId);
+io.on('connection', (socket: any) => {
 
-  socket.on("disconnect", () => {
-    console.log("Disconnected: " + socket.userId);
+  socket.on("disconnect", (reason: string) => {
+    console.log(reason)
   });
 
-  socket.on("joinRoom", ({ chatroomId }: any) => {
-    socket.join(chatroomId);
-    console.log(`${socket.userId} joined chatroom: " + ${chatroomId}`);
+  socket.on('reconnect', () => {
+    console.log('Reconnected to server');
   });
 
-  socket.on("leaveRoom", ({ chatroomId }: any) => {
-    socket.leave(chatroomId);
-    console.log("A user left chatroom: " + chatroomId);
+  socket.on('join', async ({ name, room }: any, callback: any) => {
+    const { error, user } = addUser({ id: socket.id, name, room });
+
+    if(error) return callback(error);
+
+    socket.join(user?.room);
+
+    socket.emit('message', { user: 'admin', text: `${user?.name}, welcome to room ${user?.room}.`});
+    socket.broadcast.to(user?.room).emit('message', { user: 'admin', text: `${user?.name} has joined!` });
+
+    io.to(user?.room).emit('roomData', { room: user?.room, users: getUsersInRoom(user?.room) });
+
+    callback();
   });
 
-  socket.on("chatroomMessage", async ({ chatroomId, message }: any) => {
-    if (message.trim().length > 0) {
-      const user = await User.findOne({ _id: socket.userId });
-      const newMessage = new Message({
-        roomId: chatroomId,
-        senderId: socket.userId,
-        content: message
-      });
-      io.to(chatroomId).emit("newMessage", {
-        message,
-        name: user?.username,
-        userId: socket.userId,
-      });
-      await newMessage.save();
+  socket.on('sendMessage', async (data: any, callback: any) => {
+    const { name, message, room } = data
+    io.to(room).emit('message', { user: name, text: message });
+    callback();
+  });
+
+  socket.on('disconnect', () => {
+    const user = removeUser(socket.id);
+    if(user) {
+      io.to(user.room).emit('message', { user: 'Admin', text: `${user.name} has left.` });
+      io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room)});
     }
-  });
+  })
 });

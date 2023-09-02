@@ -1,4 +1,3 @@
-import jwt from 'jsonwebtoken'
 import User from '../models/User'
 import { hash } from '../helper'
 
@@ -10,11 +9,14 @@ export const findOneUser = async (username: string) => {
       const hashed = hash(user + '' + randomstring)
       user = await User.create({username, password: hashed})
     }
-    const secretKey = process.env.SECRET_KEY as string
-    const token = jwt.sign({ id: user._id }, secretKey)
-    return token 
+    return user
   } catch (error) {
     console.log(error)
   }
+}
+
+export const findUserById = async (id: string) => {
+  const user = await User.findById(id)
+  return user;
 }
 

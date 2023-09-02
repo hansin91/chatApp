@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Row, Col, Form, Button } from 'react-bootstrap'
+import { Row, InputGroup, Col, Form, Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
 import api from '../api'
 
@@ -19,23 +19,41 @@ function LoginForm() {
 
   return (
     <div className='d-flex justify-content-center align-items-center vh-100'>
-      <Row>
-        <Col md={12} xs={12}>
-          <Form onSubmit={joinRoom}>
-            <h3>Join Chatroom</h3>
-            <Form.Group controlId="username">
-              <Form.Control type="text" placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
-            </Form.Group>
-            <Form.Group controlId="roomId">
-              <Form.Control type="text" placeholder="RoomID" onChange={(e) => setRooomId(e.target.value)} />
-            </Form.Group>
-
-            <Button variant="primary" type="submit">
-              Join
-            </Button>
-          </Form>
-        </Col>
-      </Row>
+      <div style={{width: '25%'}}>
+        <Row>
+          <Col md={12} xs={12}>
+            <Form onSubmit={joinRoom}>
+              <h3 style={{marginBottom: '3rem'}}>Join Chatroom</h3>
+               <InputGroup size="lg" style={{marginBottom: '1rem'}}>
+                <Form.Control
+                  type= "text"
+                  style={{backgroundColor: '#F6f6F6'}}
+                  placeholder="Username"
+                  onChange={(e) => setUsername(e.target.value)}
+                  aria-label="Large"
+                  aria-describedby="inputGroup-sizing-sm"
+                />
+              </InputGroup>
+              
+              <InputGroup size="lg">
+                <Form.Control
+                  type= "text"
+                  style={{backgroundColor: '#F6f6F6'}}
+                  placeholder="Room ID"
+                  onChange={(e) => setRooomId(e.target.value)}
+                  aria-label="Large"
+                  aria-describedby="inputGroup-sizing-sm"
+                />
+              </InputGroup>
+              <div className="d-grid gap-2" style={{marginTop: '7rem'}}>
+                <Button style={{backgroundColor: '#5DB075', borderColor: '#5DB075', borderRadius: '30px'}}
+                  type="submit" 
+                  variant="primary" size="lg">Join</Button>
+              </div>
+            </Form>
+          </Col>
+        </Row>
+      </div>
     </div>
   )
 }
