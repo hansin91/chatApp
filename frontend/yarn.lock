@@ -2512,6 +2512,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-scroll-to-bottom@^4.2.1":
+  "integrity" "sha512-9+O/wUqeRWjm6WzAbLeKiNnD/TvjYno9mfYYJYUoSDtElJ+iOQHASBMuBF2HKHTHir+08xcIdqKq+iJ0CyI4yQ=="
+  "resolved" "https://registry.npmjs.org/@types/react-scroll-to-bottom/-/react-scroll-to-bottom-4.2.1.tgz"
+  "version" "4.2.1"
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-transition-group@^4.4.5":
   "integrity" "sha512-VnCdSxfcm08KjsJVQcfBmhEQAPnLB8G08hAxn39azX1qYBQ/5RVQuoHuKIcfKOdncuaUvEpFKFzEvbtIMsfVew=="
   "resolved" "https://registry.npmjs.org/@types/react-transition-group/-/react-transition-group-4.4.6.tgz"

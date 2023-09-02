@@ -8,7 +8,7 @@ import InfoBar from './components/InfoBar/InfoBar';
 import Input from './components/Input/Input';
 import api from '../../api'
 
-import './Chat.css';
+import './Chat.scss';
 
 const ENDPOINT = process.env.REACT_APP_BASE_URL as string
 

@@ -2,9 +2,9 @@ import React from 'react';
 
 import onlineIcon from '../../../../icons/onlineIcon.png';
 
-import './TextContainer.css';
+import './TextContainer.scss';
 
-const TextContainer = ({ users }) => (
+const TextContainer = ({ users }: any) => (
   <div className="textContainer">
     {
       users
@@ -13,7 +13,7 @@ const TextContainer = ({ users }) => (
             <h1>People currently chatting:</h1>
             <div className="activeContainer">
               <h2>
-                {users.map(({name}) => (
+                {users.map(({name}: any) => (
                   <div key={name} className="activeItem">
                     {name}
                     <img alt="Online Icon" src={onlineIcon}/>
