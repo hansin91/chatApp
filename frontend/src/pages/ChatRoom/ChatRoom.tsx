@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import io from "socket.io-client";
 import { useLocation, useParams } from 'react-router-dom';
 
-import TextContainer from './components/TextContainer/TextContainer';
 import Messages from './components/Messages/Messages';
 import InfoBar from './components/InfoBar/InfoBar';
 import Input from './components/Input/Input';
@@ -73,7 +72,6 @@ const ChatRoom = () => {
           {name && <Messages messages={messages} name={name} />}
           <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
       </div>
-      <TextContainer users={users}/>
     </div>
   );
 }
