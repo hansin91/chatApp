@@ -11,8 +11,13 @@ import './Chat.scss';
 
 const ENDPOINT = process.env.REACT_APP_BASE_URL as string
 
+interface User {
+  id: string
+  username: string
+}
+
 const ChatRoom = () => {
-  const [name, setName] = useState('');
+  const [user, setUser] = useState<User | null>(null)
   const [room, setRoom] = useState('');
   const [users, setUsers] = useState('');
   const [message, setMessage] = useState('');
@@ -27,8 +32,8 @@ const ChatRoom = () => {
       const {data: {room}} = await api.get(`rooms/${id}`, { withCredentials: true })
       const {data: {user}} = await api.get(`users/login`, { withCredentials: true })
       setRoom(room.name)
-      setName(user)
-      socket.emit('join', { name: user, room: room.name }, (error: any) => {
+      setUser(user)
+      socket.emit('join', { name: user.username, room: room.name }, (error: any) => {
         if(error) alert(error);
       });
     }
@@ -36,6 +41,18 @@ const ChatRoom = () => {
     if (!effectRan.current && socket) {
       getRoomAndUser()
     }
+
+    socket.on('connect', () => {
+      console.log('Connected to the Socket.IO server');
+    });
+
+    socket.on('disconnect', () => {
+      console.log('Disconnected from the Socket.IO server');
+      setTimeout(() => {
+        socket.connect();
+      }, 2000);
+    });
+
     return () =>  {
       effectRan.current = true
     }
@@ -60,8 +77,8 @@ const ChatRoom = () => {
 
   const sendMessage = (event: any) => {
     event.preventDefault();
-    if(message && room && name) {
-      socket.emit('sendMessage', {message, name, room}, () => setMessage(''));
+    if(message && room && user) {
+      socket.emit('sendMessage', {message, name: user.username, room}, () => setMessage(''));
     }
   }
 
@@ -69,7 +86,7 @@ const ChatRoom = () => {
     <div className="outerContainer">
       <div className="container">
           <InfoBar room={room} />
-          {name && <Messages messages={messages} name={name} />}
+          {user && <Messages messages={messages} name={user.username} />}
           <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
       </div>
     </div>

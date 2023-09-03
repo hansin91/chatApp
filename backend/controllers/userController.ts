@@ -10,7 +10,7 @@ export const findById = async (req: Request, res: Response) => {
       const secretKey = process.env.SECRET_KEY as string
       const data = jwt.verify(token, secretKey) as any
       const user = await findUserById(data.id)
-      res.status(200).json({ user: user?.username }) 
+      res.status(200).json({ user: {username: user?.username, id: user?._id} }) 
     } else {
       res.status(400).json({ user: null })
     }
