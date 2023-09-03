@@ -2,6 +2,7 @@ import app from './app'
 import { Server } from 'socket.io'
 import jwt from 'jsonwebtoken'
 import { addUser, getUsersInRoom, getUser, removeUser } from './helper'
+import { saveMessage } from './services/messageService'
 
 const PORT = process.env.PORT
 const server = app.listen(PORT, () => {
@@ -60,6 +61,7 @@ io.on('connection', (socket: any) => {
   socket.on('sendMessage', async (data: any, callback: any) => {
     const { user, message, room } = data
     io.to(room.name).emit('message', { user: user.username, text: message });
+    await saveMessage(message, user.id, room._id)
     callback();
   });
 
