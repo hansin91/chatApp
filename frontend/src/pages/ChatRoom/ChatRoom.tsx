@@ -31,7 +31,7 @@ const ChatRoom = () => {
     const getRoomAndUser = async () => {
       const {data: {room}} = await api.get(`rooms/${id}`, { withCredentials: true })
       const {data: {user}} = await api.get(`users/login`, { withCredentials: true })
-      setRoom(room.name)
+      setRoom(room)
       setUser(user)
       socket.emit('join', { name: user.username, room: room.name }, (error: any) => {
         if(error) alert(error);
@@ -78,7 +78,7 @@ const ChatRoom = () => {
   const sendMessage = (event: any) => {
     event.preventDefault();
     if(message && room && user) {
-      socket.emit('sendMessage', {message, name: user.username, room}, () => setMessage(''));
+      socket.emit('sendMessage', {message, user, room}, () => setMessage(''));
     }
   }
 

@@ -13,25 +13,14 @@ const Message = ({ message: { text, user }, name }: any) => {
     isSentByCurrentUser = true;
   }
 
-  return (
-    isSentByCurrentUser
-      ? (
-        <div className="messageContainer justifyStart">
-          <p className="sentText pr-10">{trimmedName}</p>
-          <div className="messageBox backgroundBlue">
-            <p className="messageText colorWhite">{ReactEmoji.emojify(text)}</p>
-          </div>
-        </div>
-        )
-        : (
-          <div className="messageContainer justifyEnd">
-             <p className="sentText pl-10 ">{user}</p>
-            <div className="messageBox backgroundLight">
-              <p className="messageText colorDark">{ReactEmoji.emojify(text)}</p>
-            </div>
-          </div>
-        )
-  );
+  return(
+    <div className={`messageContainer mb-4 d-flex ${!isSentByCurrentUser ? `flex-column justify-content-start`: `flex-row justify-content-end`}`}>
+      {!isSentByCurrentUser &&  <p className="sentText mb-0">{user}</p>}
+      <div className={`messageBox ${isSentByCurrentUser ? `backgroundGreen` : `backgroundLight`}`}>
+        <p className={`messageText ${isSentByCurrentUser ? `colorWhite` : `colorDark`}`}>{ReactEmoji.emojify(text)}</p>
+      </div>
+    </div>
+  )
 }
 
 export default Message;

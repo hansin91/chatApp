@@ -58,8 +58,8 @@ io.on('connection', (socket: any) => {
   });
 
   socket.on('sendMessage', async (data: any, callback: any) => {
-    const { name, message, room } = data
-    io.to(room).emit('message', { user: name, text: message });
+    const { user, message, room } = data
+    io.to(room.name).emit('message', { user: user.username, text: message });
     callback();
   });
 

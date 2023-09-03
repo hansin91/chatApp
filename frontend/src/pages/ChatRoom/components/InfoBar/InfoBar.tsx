@@ -1,19 +1,12 @@
 import React from 'react';
-
-import onlineIcon from '../../../../icons/onlineIcon.png';
-import closeIcon from '../../../../icons/closeIcon.png';
+import { Button } from 'react-bootstrap'
 
 import './InfoBar.scss';
 
 const InfoBar = ({ room }: any) => (
-  <div className="infoBar">
-    <div className="leftInnerContainer">
-      <img className="onlineIcon" src={onlineIcon} alt="online icon" />
-      <h3>{room}</h3>
-    </div>
-    <div className="rightInnerContainer">
-      <a href="/"><img src={closeIcon} alt="close icon" /></a>
-    </div>
+  <div className="info-bar">
+    <Button className="exit-button primary-color" variant="link">Exit</Button>
+    <div style={{width: '100%'}}><h3>{room.name}</h3></div>
   </div>
 );
 

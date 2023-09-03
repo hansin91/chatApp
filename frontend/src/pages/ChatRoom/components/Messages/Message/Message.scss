@@ -1,18 +1,61 @@
+$messageBoxRadius: 10px;
+$borderColorMessage: #e8e8e8;
+$receivedTextBackground: #f6f6f6;
+
 .messageBox {
-  background: #F3F3F3;
-  border-radius: 20px;
-  padding: 5px 20px;
-  color: white;
-  display: inline-block;
-  max-width: 60%;
+  border-top-left-radius: $messageBoxRadius;
+  border-top-right-radius: $messageBoxRadius;
+  border-bottom-right-radius: $messageBoxRadius;
+  border: 1px solid $borderColorMessage;
+  position: relative;
+  // padding: 5px 20px;
+  // color: white;
+  // display: inline-block;
+  
+  color: #fff;
+  padding: 13px;
+  // border-radius: 10px;
+  width: 60%;
+
+  // &::before {
+  //   content: '';
+  //   position: absolute;
+  //   bottom: 0;
+  //   left: 0;
+  //   width: 0;
+  //   height: 0;
+  //   border-left: 23px solid $receivedTextBackground;
+  //   border-right: 0px solid $receivedTextBackground;
+  //   border-bottom: 20px solid $receivedTextBackground;
+  //   // border-top: 0px solid transparent;
+  //   border-left-color: transparent;
+  //   margin-bottom: -20px;
+  //   transform: rotate(180deg);
+  // }
+}
+
+.triangle {
+  // width: 0;
+  // height: 0;
+  // border-left: 23px solid transparent; /* Left side of the triangle (transparent) */
+  // border-bottom: 20px solid #f6f6f6;
+  // transform: rotate(180deg); 
+  width: 0;
+	height: 0;
+	// border-right: 23px solid transparent;
+  // border-right-color: $borderColorMessage;
+	border-top: 20px solid red;
+  border-left: 1px solid red;
+  border-right: 23px solid red;
 }
 
 .messageText {
-  /* width: 100%; */
   letter-spacing: 0;
   float: left;
   font-size: 1.1em;
   word-wrap: break-word;
+  text-align: left;
+  line-height: 1;
 }
 
 .messageText img {
@@ -20,10 +63,6 @@
 }
 
 .messageContainer {
-  display: flex;
-  justify-content: flex-end;
-  flex-direction: column;
-  padding: 0 5%;
   margin-top: 3px;
 }
 
@@ -31,7 +70,7 @@
   display: flex;
   align-items: flex-start;
   font-family: Helvetica;
-  color: #828282;
+  color: #000;
   letter-spacing: 0.3px;
 }
 
@@ -59,10 +98,10 @@
   color: #353535;
 }
 
-.backgroundBlue {
-  background: #2979FF;
+.backgroundGreen {
+  background: #5DB075;
 }
 
 .backgroundLight {
-  background: #F3F3F3;
+  background: $receivedTextBackground;
 }

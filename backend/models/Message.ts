@@ -1,12 +1,12 @@
 import mongoose, { Schema } from "mongoose";
-import Rooms from './Room'
+import Room from './Room'
 import User from './User'
 
 const messageSchema = new Schema(
   {
     roomId: {
       type: Schema.ObjectId,
-      ref: Rooms
+      ref: Room
     },
     senderId: {
       type: Schema.ObjectId,
