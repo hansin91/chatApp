@@ -1,0 +1,12 @@
+.join-form-input {
+  background-color: #F6f6F6;
+  &::placeholder {
+    color: #BDBDBD;
+    font-size: 16px;
+  }
+  &:focus {
+    background-color: #F6f6F6;
+    box-shadow: none;
+    border-color: #e8e8e8;
+  }
+}

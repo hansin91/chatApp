@@ -5,7 +5,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import './App.scss';
-import LoginForm from './pages/Login';
+import LoginForm from './pages/Login/Login';
 import ChatRoom from './pages/ChatRoom/ChatRoom';
 import './index.scss'
 

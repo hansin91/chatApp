@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
 import { Row, InputGroup, Col, Form, Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
-import api from '../api'
+import api from '../../api'
+
+import './Login.scss'
 
 function LoginForm() {
 
   const [username, setUsername] = useState('')
+  const [error, setError] = useState({})
   const [roomId, setRooomId] = useState('')
   const navigate = useNavigate()
 
@@ -27,8 +30,8 @@ function LoginForm() {
                <InputGroup size="lg" style={{marginBottom: '1rem'}}>
                 <Form.Control
                   type= "text"
-                  style={{backgroundColor: '#F6f6F6'}}
                   placeholder="Username"
+                  className="join-form-input"
                   onChange={(e) => setUsername(e.target.value)}
                   aria-label="Large"
                   aria-describedby="inputGroup-sizing-sm"
@@ -38,8 +41,8 @@ function LoginForm() {
               <InputGroup size="lg">
                 <Form.Control
                   type= "text"
-                  style={{backgroundColor: '#F6f6F6'}}
                   placeholder="Room ID"
+                  className="join-form-input"
                   onChange={(e) => setRooomId(e.target.value)}
                   aria-label="Large"
                   aria-describedby="inputGroup-sizing-sm"
@@ -47,7 +50,8 @@ function LoginForm() {
               </InputGroup>
               <div className="d-grid gap-2" style={{marginTop: '7rem'}}>
                 <Button style={{backgroundColor: '#5DB075', borderColor: '#5DB075', borderRadius: '30px'}}
-                  type="submit" 
+                  type="submit"
+                  disabled={!username || !roomId} 
                   variant="primary" size="lg">Join</Button>
               </div>
             </Form>
