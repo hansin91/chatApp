@@ -1,12 +1,13 @@
 import express, { Express } from 'express';
 import dotenv from 'dotenv';
+dotenv.config();
+
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 
 import roomRoute from './routes/roomRoute'
 import userRoute from './routes/userRoute'
-
-dotenv.config();
+import { isAuthenticated } from './middlewares/isAauthenticated'
 
 // database
 import './db'
@@ -22,7 +23,9 @@ app.use(cors({
   origin: ["http://localhost:3000"],
   credentials: true
 }));
-app.use('/rooms', roomRoute)
+app.use(isAuthenticated)
 app.use('/users', userRoute)
+app.use('/rooms', roomRoute)
+
 
 export default app

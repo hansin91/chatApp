@@ -35,8 +35,8 @@ io.use(async (socket: any, next) => {
 
 io.on('connection', (socket: any) => {
 
-  socket.on("disconnect", (reason: string) => {
-    console.log(reason)
+  socket.on("disconnect", (reason: any) => {
+    console.log((typeof reason) === 'string' ? reason : JSON.stringify(reason))
   });
 
   socket.on('reconnect', () => {

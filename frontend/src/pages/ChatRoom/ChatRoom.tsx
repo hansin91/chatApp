@@ -39,7 +39,10 @@ const ChatRoom = () => {
     }
 
     if (!effectRan.current && socket) {
-      getRoomAndUser()
+      try {
+        getRoomAndUser()
+      } catch (error) {
+      }
     }
 
     socket.on('connect', () => {
