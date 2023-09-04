@@ -27,5 +27,4 @@ app.use(isAuthenticated)
 app.use('/users', userRoute)
 app.use('/rooms', roomRoute)
 
-
 export default app

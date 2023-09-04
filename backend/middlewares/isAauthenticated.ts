@@ -1,7 +1,6 @@
 import {Request, Response, NextFunction } from 'express'
 import jwt from 'jsonwebtoken'
 import User from '../models/User'
-import Room from '../models/Room'
 
 export const isAuthenticated = async (req: Request, res: Response, next: NextFunction) => {
   const url = req.url

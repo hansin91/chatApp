@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import io from "socket.io-client";
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
 
 import Messages from './components/Messages/Messages';
 import InfoBar from './components/InfoBar/InfoBar';
@@ -26,6 +26,17 @@ const ChatRoom = () => {
   const location = useLocation()
   const { id } = useParams()
   const effectRan = useRef(false)
+  const navigate = useNavigate()
+
+  const leaveRoom = async () => {
+    try {
+      const data = await api.post(`rooms/leave`, {id}, { withCredentials: true })
+      socket.emit('leaveRoom', {user}, () => {})
+      navigate(`/`);
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   useEffect(() => {
     const getRoomAndUser = async () => {
@@ -88,7 +99,7 @@ const ChatRoom = () => {
   return (
     <div className="outerContainer">
       <div className="container">
-          <InfoBar room={room} />
+          <InfoBar room={room} leaveRoom={leaveRoom} />
           {user && <Messages messages={messages} name={user.username} />}
           <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
       </div>

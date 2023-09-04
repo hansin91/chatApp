@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken'
 import { Request, Response } from 'express'
 import { findOneUser, updateUser } from '../services/userService'
-import { findOneRoom, findRoomById } from '../services/roomService';
+import { findOneRoom, findRoomById } from '../services/roomService'
+import User from '../models/User'
 
 export const joinRoom = async (req: Request, res: Response) => {
   try {
@@ -27,9 +28,18 @@ export const joinRoom = async (req: Request, res: Response) => {
   }
 }
 
-export const leaveRoom = (req: Request, res: Response) => {
+export const leaveRoom = async (req: Request, res: Response) => {
   try {
-    
+    const data = JSON.parse((req as any)['user_room'])
+    const {id} = req.body
+    if (data.roomId === id) {
+        const user = await User.findById(data.id)
+        const response = await User.findByIdAndUpdate(data.id, {roomId: null}, { return: 'after'})
+        res.clearCookie('token', { httpOnly: true });
+        res.status(200).json({message: `${user?.username} exit from room`})
+    } else {
+      res.status(401).json({message: 'Unathorized'})
+    }
   } catch (error) {
     res.status(500).json({ message: 'Internal Server Error', error})
   }

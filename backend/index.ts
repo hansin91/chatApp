@@ -64,6 +64,14 @@ io.on('connection', (socket: any) => {
     await saveMessage(message, user.id, room._id)
     callback();
   });
+  
+  socket.on('leaveRoom', async (data: any, callback: any) => {
+    const user = removeUser(socket.id);
+    if(user) {
+      io.to(user.room).emit('message', { user: 'Admin', text: `${user.name} has left.` });
+      io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room)});
+    }
+  })
 
   socket.on('disconnect', () => {
     const user = removeUser(socket.id);
