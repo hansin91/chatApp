@@ -30,7 +30,7 @@ const ChatRoom = () => {
 
   const leaveRoom = async () => {
     try {
-      const data = await api.post(`rooms/leave`, {id}, { withCredentials: true })
+      await api.post(`rooms/leave`, {id}, { withCredentials: true })
       socket.emit('leaveRoom', {user}, () => {})
       navigate(`/`);
     } catch (error) {
@@ -49,9 +49,15 @@ const ChatRoom = () => {
       });
     }
 
+    const getMessages = async () => {
+      const {data: {messages}} = await api.get(`messages/room/${id}`, { withCredentials: true })
+      setMessages(messages)
+     }
+
     if (!effectRan.current && socket) {
       try {
         getRoomAndUser()
+        getMessages()
       } catch (error) {
       }
     }
@@ -100,7 +106,7 @@ const ChatRoom = () => {
     <div className="outerContainer">
       <div className="container">
           <InfoBar room={room} leaveRoom={leaveRoom} />
-          {user && <Messages messages={messages} name={user.username} />}
+          {user && <Messages messages={messages} loggedUser={user} />}
           <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
       </div>
     </div>

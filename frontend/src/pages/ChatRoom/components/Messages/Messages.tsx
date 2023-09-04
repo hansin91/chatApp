@@ -6,9 +6,9 @@ import Message from './Message/Message';
 
 import './Messages.scss';
 
-const Messages = ({ messages, name }: any) => (
+const Messages = ({ messages, loggedUser }: any) => (
   <ScrollToBottom className="messages">
-    {messages.map((message: any, i: number) => <Message key={i} message={message} name={name}/>)}
+    {messages.map((message: any, i: number) => <Message key={i} message={message} loggedUser={loggedUser}/>)}
   </ScrollToBottom>
 );
 

@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser'
 
 import roomRoute from './routes/roomRoute'
 import userRoute from './routes/userRoute'
+import messageRoute from './routes/messageRoute'
 import { isAuthenticated } from './middlewares/isAauthenticated'
 
 // database
@@ -26,5 +27,6 @@ app.use(cors({
 app.use(isAuthenticated)
 app.use('/users', userRoute)
 app.use('/rooms', roomRoute)
+app.use('/messages', messageRoute)
 
 export default app
