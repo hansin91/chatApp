@@ -3,7 +3,7 @@ import { randomUUID } from 'crypto'
 
 const roomSchema = new mongoose.Schema(
   {
-    id: {
+    uuid: {
       type: Schema.Types.UUID,
       default: () => randomUUID(),
       required: true

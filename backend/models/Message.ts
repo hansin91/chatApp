@@ -5,11 +5,11 @@ import User from './User'
 const messageSchema = new Schema(
   {
     roomId: {
-      type: Schema.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: Room
     },
     senderId: {
-      type: Schema.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: User
     },
     content: {
